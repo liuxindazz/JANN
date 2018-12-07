@@ -1,6 +1,5 @@
 import torch.nn as nn
 import torch
-from functions import ReverseLayerF
 import torchvision.models as models
 
 
@@ -18,7 +17,7 @@ class CNNModel(nn.Module):
 
         #load placesnet
         alexn = models.__dict__['alexnet'](num_classes=365)
-        checkpoint = torch.load('models/alexnet_places365.pth.tar', map_location=lambda storage, loc: storage)
+        checkpoint = torch.load('/1116/models/alexnet_places365.pth.tar', map_location=lambda storage, loc: storage)
         state_dict = {str.replace(k,'module.',''): v for k,v in checkpoint['state_dict'].items()}
         alexn.load_state_dict(state_dict)
         new_classifier = nn.Sequential(*list(alexn.classifier.children())[:-1])

@@ -31,7 +31,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # )
 
 model_ft = models.__dict__['alexnet'](num_classes=365)
-checkpoint = torch.load('models/alexnet_places365.pth.tar', map_location=lambda storage, loc: storage)
+checkpoint = torch.load('/1116/models/alexnet_places365.pth.tar', map_location=lambda storage, loc: storage)
 state_dict = {str.replace(k,'module.',''): v for k,v in checkpoint['state_dict'].items()}
 model_ft.load_state_dict(state_dict)
 new_classifier = nn.Sequential(*list(model_ft.classifier.children())[:-1])
@@ -96,7 +96,7 @@ dataloaders ={phase: torch.utils.data.DataLoader(
     dataset=dataset[phase],
     batch_size=batch_size,
     shuffle=False,
-    num_workers=8)
+    num_workers=0)
     for phase in ['train', 'test']}
 
 # Train and evaluate

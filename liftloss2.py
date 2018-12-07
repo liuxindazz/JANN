@@ -49,9 +49,23 @@ def lifted_loss(score, target, margin=1):
 
 if __name__ == "__main__":
     import numpy as np
+    # np.random.seed(123)
+    
+    # score = np.random.uniform(0, 1, (20, 3))
+    # target = np.random.choice(range(3), 20)
+    data_size = 32
+    input_dim = 3
+    output_dim = 2
+    num_class = 4
+    torch.manual_seed(123)
+    torch.cuda.manual_seed_all(123)
     np.random.seed(123)
+    x = torch.tensor(torch.rand(data_size, input_dim), requires_grad=False)
+    # print(x)
+    w = torch.tensor(torch.rand(input_dim, output_dim), requires_grad=True)
+    inputs = x.mm(w)
+    #y_ = 8*list(range(num_class))
+    y_ = np.random.choice(num_class, data_size)
+    targets = torch.tensor(torch.IntTensor(y_))
     
-    score = np.random.uniform(0, 1, (20, 3))
-    target = np.random.choice(range(3), 20)
-    
-print lifted_loss(Variable(torch.FloatTensor(score)), Variable(torch.LongTensor(target)))
+print(lifted_loss(torch.FloatTensor(inputs), targets))
